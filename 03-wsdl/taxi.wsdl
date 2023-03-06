@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://tut02/" targetNamespace="http://tut02/">
+    <wsdl:documentation>taxi</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema targetNamespace="http://tut02/" elementFormDefault="qualified">
+            <xs:element name="regReq" type="ns:regReq"/>
+            <xs:element name="regReqResponse" type="ns:regReqResponse"/>
+            <xs:complexType name="regReq">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:boolean"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="regReqResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="regReq">
+        <wsdl:part name="parameters" element="ns:regReq"/>
+    </wsdl:message> 
+    <wsdl:message name="regReqResponse">
+        <wsdl:part name="parameters" element="ns:regReqResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="RR">
+        <wsdl:operation name="regReq">
+            <wsdl:input   message="ns:regReq"/>
+            <wsdl:output message="ns:regReqResponse"/> 
+        </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="RRimplPortBinding" type="ns:RR">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="regReq">
+            <soap:operation soapAction="http://tut02/regReq" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="RRimplService">
+        <wsdl:port name="RRimplPort" binding="ns:RRimplPortBinding">
+            <soap:address location="http://127.0.0.1:8000/RR"/>
+        </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
+

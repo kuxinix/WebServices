@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns="http://tut01/" targetNamespace="http://tut01/">
+    <wsdl:documentation>taxi</wsdl:documentation>
+    <wsdl:types>
+        <xs:schema targetNamespace="http://tut01/" elementFormDefault="qualified">
+            <xs:element name="req" type="ns:req"/>
+            <xs:element name="reqResponse" type="ns:reqResponse"/>
+            <xs:complexType name="req">
+                <xs:sequence>
+                    <xs:element name="arg0" type="xs:int"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="reqResponse">
+                <xs:sequence>
+                    <xs:element name="return" type="xs:string" minOccurs="0"/>
+                </xs:sequence>
+            </xs:complexType>   
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="req">
+        <wsdl:part name="parameters" element="ns:req"/>
+    </wsdl:message> 
+    <wsdl:message name="reqResponse">
+        <wsdl:part name="parameters" element="ns:reqResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="PR">
+        <wsdl:operation name="req">
+            <wsdl:input   message="ns:req"/>
+            <wsdl:output message="ns:reqResponse"/> 
+        </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="RRimplPortBinding" type="ns:PR">
+        <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+        <wsdl:operation name="req">
+            <soap:operation soapAction="http://tut02/req" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="PRimplService">
+        <wsdl:port name="PRimplPort" binding="ns:PRimplPortBinding">
+            <soap:address location="http://127.0.0.1:8000/PR"/>
+        </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
